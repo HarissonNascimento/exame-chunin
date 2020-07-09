@@ -43,3 +43,19 @@ class Flex implements CombustivelInterface {
         return "Flex";
     }
 }
+
+class Hibrido implements CombustivelInterface{
+
+    @Override
+    public String getTipoCombustivel() {
+        return "Híbrido";
+    }
+}
+
+class OutrosCombustivel implements CombustivelInterface{
+
+    @Override
+    public String getTipoCombustivel() {
+        return "Outros";
+    }
+}
