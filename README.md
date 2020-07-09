@@ -3,6 +3,7 @@ O projeto propoem um sistema de vendas e gerenciamento de veículos, onde o usu�
 
 # Tecnologías ultilizadas
 Para este projeto foram ultilizadas as seguintes tecnologías:
+- JavaEE 8
 - JSF 2.2.20
 - PrimeFaces 8.0
 - Apache 3.0
