@@ -9,7 +9,7 @@ Para este projeto foram ultilizadas as seguintes tecnologías:
 - MySql 8.0.18
 - Ominifaces 3.6.1
 - Maven 3.3
-_Para mais informações, consultar arquivo pom.xml_
+ _Para mais informações, consultar arquivo pom.xml_
 
 # Implementação do projeto
 
