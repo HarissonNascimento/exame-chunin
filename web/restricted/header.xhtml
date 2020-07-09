@@ -1,0 +1,40 @@
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:form>
+        <p:growl id="messages" showDetail="true"/>
+        <p:toolbar>
+
+            <f:facet name="left">
+                <h:panelGrid columns="4">
+                    <p:commandButton value="Home" action="homeadm?faces-redirect=true" icon="pi pi-home" ajax="false"/>
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <p:inputText value="#{headerBean.busca}" placeholder="Procurar"/>
+                            <p:commandButton icon="pi pi-search" styleClass="white-button"
+                                             action="#{headerBean.buscar()}"/>
+                        </div>
+                    </div>
+                </h:panelGrid>
+            </f:facet>
+            <f:facet name="right">
+                <p:commandButton id="dynaButton" value="Painel Administrativo" type="button" icon="pi pi-pencil"/>
+                <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom">
+                    <p:submenu label="Painel">
+                        <p:menuitem value="Novo veículo" action="novoveiculo?faces-redirect=true" ajax="false"
+                                    icon="pi pi-plus-circle"/>
+                        <p:menuitem value="Veículos a venda" action="/resultbusca.xhtml?faces-redirect=true"
+                                    ajax="false"
+                                    icon="pi pi-list"/>
+                        <p:menuitem value="Home" action="homeadm?faces-redirect=true" ajax="false" icon="pi pi-home"/>
+                    </p:submenu>
+                </p:menu>
+                <p:commandButton value="#{loginBean.estadoLogin()}" action="#{loginBean.logout()}"
+                                 icon="pi pi-sign-in"/>
+            </f:facet>
+        </p:toolbar>
+
+
+    </h:form>
+</ui:composition>

@@ -1,0 +1,142 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" template="WEB-INF/template/layout.xhtml">
+
+
+    <ui:define name="content">
+        <h:inputHidden value="#{flash.keep}"/><br/>
+        <h:inputHidden value="#{flash.veiculo}"/><br/>
+        <p:importEnum type="br.com.examechunin.model.enums.TipoVeiculo"
+                      var="TipoVeiculo" allSuffix="ALL_ENUM_VALUES"/>
+        <p:importEnum type="br.com.examechunin.model.enums.Combustivel"
+                      var="Combustivel" allSuffix="ALL_ENUM_VALUES"/>
+        <p:importEnum type="br.com.examechunin.model.enums.Transmissao"
+                      var="Transmissao" allSuffix="ALL_ENUM_VALUES"/>
+        <h:outputStylesheet library="default" name="css/style.css"/>
+        <h:form id="panel">
+            <p:panel id="basic"
+                     header="#{veiculoBean.veiculo.marca} #{veiculoBean.veiculo.modelo} #{veiculoBean.veiculo.ano}"
+                     style="margin-bottom: 20px">
+                <p:commandButton value="Editar" icon="pi pi-cog" actionListener="#{veiculoBean.edit}"
+                                 style="float: right" rendered="#{loginBean.logged}" ajax="true">
+                    <f:ajax event="click" render="panel"/>
+                </p:commandButton>
+                <h:panelGrid columns="3" cellpadding="10">
+                    <p:galleria id="galeria" value="#{veiculoBean.listDiretoriosImages}" panelHeight="313"
+                                panelWidth="500"
+                                var="image" rendered="true">
+                        <p:graphicImage styleClass="container4" library="default"
+                                        name="images/#{veiculoBean.veiculo.pastaImagens}/#{image}"/>
+                    </p:galleria>
+                    <h:panelGrid columns="2" style="width: 300px">
+                        <h:outputText value="Marca:" style="font-weight: bold"/>
+                        <h:outputText value="#{veiculoBean.veiculo.marca}"
+                                      rendered="#{not veiculoBean.veiculo.editing}"/>
+                        <p:inputText value="#{veiculoBean.veiculo.marca}"
+                                     rendered="#{veiculoBean.veiculo.editing and loginBean.logged}"/>
+                        <p:separator/><br/>
+
+                        <h:outputText value="Modelo:" style="font-weight: bold"/>
+                        <h:outputText value="#{veiculoBean.veiculo.modelo}"
+                                      rendered="#{not veiculoBean.veiculo.editing}"/>
+                        <p:inputText value="#{veiculoBean.veiculo.modelo}"
+                                     rendered="#{veiculoBean.veiculo.editing and loginBean.logged}"/>
+                        <p:separator/><br/>
+
+                        <h:outputText value="Ano:" style="font-weight: bold"/>
+                        <h:outputText value="#{veiculoBean.veiculo.ano}" rendered="#{not veiculoBean.veiculo.editing}"/>
+                        <p:inputText value="#{veiculoBean.veiculo.ano}"
+                                     rendered="#{veiculoBean.veiculo.editing and loginBean.logged}">
+                            <p:keyFilter regEx="/[\d\-]/"/>
+                        </p:inputText>
+                        <p:separator/><br/>
+
+                        <h:outputText value="Preço: " style="font-weight: bold"/>
+                        <h:outputText value="R$#{veiculoBean.veiculo.preco} *" style="font-weight: bold"
+                                      rendered="#{not veiculoBean.veiculo.editing}"/>
+                        <p:inputText value="#{veiculoBean.veiculo.preco}"
+                                     rendered="#{veiculoBean.veiculo.editing and loginBean.logged}">
+                            <p:keyFilter regEx="/[\d\-\.]/"/>
+                        </p:inputText>
+                        <p:separator/><br/>
+
+                        <h:outputText value="Transmissão:" style="font-weight: bold"/>
+                        <h:outputText value="#{veiculoBean.veiculo.transmissao}"
+                                      rendered="#{not veiculoBean.veiculo.editing}"/>
+                        <p:selectOneMenu value="#{veiculoBean.veiculo.transmissaoEnum}" required="true"
+                                         requiredMessage="Selecione um tipo de transmissão"
+                                         style="width: 220px"
+                                         rendered="#{veiculoBean.veiculo.editing and loginBean.logged}">
+                            <f:selectItem value="#{null}" itemLabel="Selecione o tipo da transmissão"/>
+                            <f:selectItems value="#{Transmissao.ALL_ENUM_VALUES}" var="tipoTransmissao"
+                                           itemValue="#{tipoTransmissao}"
+                                           itemLabel="#{tipoTransmissao}"/>
+                        </p:selectOneMenu>
+                        <p:separator/><br/>
+
+                        <h:outputText value="Combustível:" style="font-weight: bold"/>
+                        <h:outputText value="#{veiculoBean.veiculo.combustivel}"
+                                      rendered="#{not veiculoBean.veiculo.editing}"/>
+                        <p:selectOneMenu value="#{veiculoBean.veiculo.combustivelEnum}" required="true"
+                                         requiredMessage="Selecione um tipo de combustivel"
+                                         style="width: 220px"
+                                         rendered="#{veiculoBean.veiculo.editing and loginBean.logged}">
+                            <f:selectItem value="#{null}" itemLabel="Selecione o tipo de combustivel"/>
+                            <f:selectItems value="#{Combustivel.ALL_ENUM_VALUES}" var="tipoCombustivel"
+                                           itemValue="#{tipoCombustivel}"
+                                           itemLabel="#{tipoCombustivel}"/>
+                        </p:selectOneMenu>
+                        <p:separator/><br/>
+
+                        <h:outputText value="Tipo do veículo:" style="font-weight: bold"/>
+                        <h:outputText value="#{veiculoBean.veiculo.tipoVeiculo}"
+                                      rendered="#{not veiculoBean.veiculo.editing}"/>
+                        <p:selectOneMenu value="#{veiculoBean.veiculo.tipoVeiculoEnum}" required="true"
+                                         requiredMessage="Selecione um tipo para o veículo"
+                                         style="width: 220px"
+                                         rendered="#{veiculoBean.veiculo.editing and loginBean.logged}">
+                            <f:selectItem value="#{null}" itemLabel="Selecione o tipo do veículo"/>
+                            <f:selectItems value="#{TipoVeiculo.ALL_ENUM_VALUES}" var="tipoVeiculo"
+                                           itemValue="#{tipoVeiculo}"
+                                           itemLabel="#{tipoVeiculo}"/>
+                        </p:selectOneMenu>
+                        <p:separator/><br/>
+
+                        <h:outputText value="Marcar veículo como vendido?"
+                                      rendered="#{veiculoBean.veiculo.editing and loginBean.logged}"/>
+                        <p:selectBooleanCheckbox value="#{veiculoBean.veiculo.statusVendido}"
+                                                 rendered="#{veiculoBean.veiculo.editing and loginBean.logged}"/>
+                        <p:selectOneMenu id="selecionarComprador" value="#{veiculoBean.comprador.id}"
+                                         style="width: 220px"
+                                         rendered="#{veiculoBean.veiculo.editing and loginBean.logged}">
+                            <f:selectItem value="#{null}" itemLabel="Selecione um comprador"/>
+                            <f:selectItems value="#{veiculoBean.compradorList}" var="comprador"
+                                           itemValue="#{comprador.id}"
+                                           itemLabel="#{comprador.nome}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" style="width: 400px">
+                        <h:outputText value="Descrição" style="font-weight: bold"/>
+                        <p:separator/>
+                        <h:outputText value="#{veiculoBean.veiculo.descricao}"
+                                      rendered="#{not veiculoBean.veiculo.editing}"/>
+                        <p:inputTextarea value="#{veiculoBean.veiculo.descricao}" rows="8" cols="50" counter="descricao"
+                                         maxlength="200"
+                                         counterTemplate="{0} caractéres restantes."
+                                         autoResize="false"
+                                         rendered="#{veiculoBean.veiculo.editing}"/>
+                        <h:outputText id="descricao"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <p:commandButton value="Salvar" actionListener="#{veiculoBean.salvar}" icon="pi pi-save"
+                                 rendered="#{veiculoBean.veiculo.editing and loginBean.logged}" ajax="false"/>
+                <p:commandButton value="Comprar" action="#{veiculoBean.comprar}" icon="pi pi-shopping-cart"
+                                 rendered="#{not loginBean.logged}" ajax="false"/>
+            </p:panel>
+        </h:form>
+        <h5><i>Legenda: * = preços em oferta especial</i></h5>
+    </ui:define>
+
+</ui:composition>

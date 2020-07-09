@@ -1,0 +1,190 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" template="layout.xhtml">
+    <ui:define name="content">
+        <h:outputStylesheet library="default" name="css/style.css"/>
+        <h:form>
+            <p:tabView orientation="left">
+                <p:tab title="Veiculos em estoque">
+                    <p:dataGrid var="veiculo" value="#{homeADMBean.veiculosEstoque()}"
+                                columns="3"
+                                layout="grid"
+                                rows="6"
+                                paginator="true"
+                                id="veiculos"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,18">
+                        <f:facet name="header">
+                            Veículos em estoque
+                        </f:facet>
+
+                        <p:panel header="#{veiculo.modelo}" style="text-align: justify-all">
+                            <h:panelGrid columns="1" style="width:100%; max-height: 300px">
+                                <p:graphicImage library="default"
+                                                name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                                styleClass="container"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:outputText value="Marca" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.marca}"/>
+                                <h:outputText value="Modelo" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.modelo}"/>
+                                <h:outputText value="Ano" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.ano}"/>
+                                <h:outputText value="Combustível" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.combustivel}"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:panelGrid columns="3" bodyrows="1">
+                                    <p:commandButton value="Detalhes..." action="#{homeADMBean.detalhes()}"
+                                                     icon="pi pi-list"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculo}"
+                                                                     target="#{homeADMBean.veiculoSelecionado}"/>
+                                    </p:commandButton>
+
+                                    <p:commandButton value="Deletar" action="#{homeADMBean.deletar()}"
+                                                     icon="pi pi-times"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculo}"
+                                                                     target="#{homeADMBean.veiculoSelecionado}"/>
+                                        <p:confirm header="Deletar"
+                                                   message="Tem certeza que deseja deletar #{veiculo.modelo} ?"
+                                                   icon="pi pi-exclamation-triangle"/>
+                                    </p:commandButton>
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
+                                                         icon="pi pi-check"/>
+                                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no"
+                                                         icon="pi pi-times"/>
+                                    </p:confirmDialog>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+                <p:tab title="Veiculos vendidos">
+                    <p:dataGrid var="veiculoVendido" value="#{homeADMBean.veiculosVendidos()}"
+                                columns="3"
+                                layout="grid"
+                                rows="6"
+                                paginator="true"
+                                id="veiculoVendido"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,18">
+                        <f:facet name="header">
+                            Veículos vendidos
+                        </f:facet>
+
+                        <p:panel header="#{veiculoVendido.modelo}" style="text-align: justify-all">
+                            <h:panelGrid columns="1" style="width:100%;min-height: 300px">
+                                <p:graphicImage library="default"
+                                                name="images/#{veiculoVendido.pastaImagens}/#{veiculoVendido.thumbnail()}"
+                                                styleClass="container"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:outputText value="Marca" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculoVendido.marca}"/>
+                                <h:outputText value="Modelo" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculoVendido.modelo}"/>
+                                <h:outputText value="Ano" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculoVendido.ano}"/>
+                                <h:outputText value="Combustível" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculoVendido.combustivel}"/>
+                                <h:outputText value="Vendido para:" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculoVendido.comprador.nome}"/>
+                                <h:outputText value="Telefone:" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculoVendido.comprador.telefone}"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:panelGrid columns="3" bodyrows="1">
+                                    <p:commandButton value="Detalhes..." action="#{homeADMBean.detalhes()}"
+                                                     icon="pi pi-list"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculoVendido}"
+                                                                     target="#{homeADMBean.veiculoSelecionado}"/>
+                                    </p:commandButton>
+
+                                    <p:commandButton value="Deletar" action="#{homeADMBean.deletar()}"
+                                                     icon="pi pi-times"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculoVendido}"
+                                                                     target="#{homeADMBean.veiculoSelecionado}"/>
+                                        <p:confirm header="Deletar"
+                                                   message="Tem certeza que deseja deletar #{veiculoVendido.modelo} ?"
+                                                   icon="pi pi-exclamation-triangle"/>
+                                    </p:commandButton>
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
+                                                         icon="pi pi-check"/>
+                                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no"
+                                                         icon="pi pi-times"/>
+                                    </p:confirmDialog>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+                <p:tab title="Compradores a contatar" id="contatarTab">
+                    <p:dataView id="dataViewList" var="compradorContatar"
+                                value="#{homeADMBean.compradoresContatar()}" listIcon="pi pi-bars">
+                        <p:dataViewListItem>
+                            <h:panelGrid columns="3" style="width: 100%" columnClasses="logo, detail">
+                                <p:graphicImage library="default"
+                                                name="images/#{compradorContatar.veiculo.pastaImagens}/#{compradorContatar.veiculo.thumbnail()}"
+                                                styleClass="container"/>
+
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value="Id: "/>
+                                        <h:outputText value="#{compradorContatar.id}" style="font-weight: bold"/>
+                                        <h:outputText value="Nome: "/>
+                                        <h:outputText value="#{compradorContatar.nome}" style="font-weight: bold"/>
+                                        <h:outputText value="Telefone: "/>
+                                        <h:outputText value="#{compradorContatar.telefone}" style="font-weight: bold"/>
+                                        <h:outputText value="Veiculo: "/>
+                                        <h:outputText value="#{compradorContatar.veiculo.modelo}"
+                                                      style="font-weight: bold"/>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+                                <p:commandButton value="Já contatou" icon="pi pi-user-edit" iconPos="right"
+                                                 action="#{homeADMBean.compradorContatado()}">
+                                    <f:setPropertyActionListener target="#{homeADMBean.compradorSelecionado}"
+                                                                 value="#{compradorContatar}"/>
+                                </p:commandButton>
+
+                            </h:panelGrid>
+                        </p:dataViewListItem>
+                    </p:dataView>
+                </p:tab>
+                <p:tab title="Compradores Contatados">
+                    <p:dataView id="dataViewList2" var="compradoresContatados"
+                                value="#{homeADMBean.compradoresContatados()}" listIcon="pi pi-bars">
+                        <p:dataViewListItem>
+                            <h:panelGrid columns="2" style="width: 100%" columnClasses="logo, detail">
+                                <p:graphicImage library="default"
+                                                name="images/#{compradoresContatados.veiculo.pastaImagens}/#{compradoresContatados.veiculo.thumbnail()}"
+                                                styleClass="container"/>
+
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value="Id: "/>
+                                        <h:outputText value="#{compradoresContatados.id}" style="font-weight: bold"/>
+                                        <h:outputText value="Nome: "/>
+                                        <h:outputText value="#{compradoresContatados.nome}" style="font-weight: bold"/>
+                                        <h:outputText value="Telefone: "/>
+                                        <h:outputText value="#{compradoresContatados.telefone}"
+                                                      style="font-weight: bold"/>
+                                        <h:outputText value="Veiculo: "/>
+                                        <h:outputText value="#{compradoresContatados.veiculo.modelo}"
+                                                      style="font-weight: bold"/>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+
+                            </h:panelGrid>
+                        </p:dataViewListItem>
+                    </p:dataView>
+                </p:tab>
+            </p:tabView>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

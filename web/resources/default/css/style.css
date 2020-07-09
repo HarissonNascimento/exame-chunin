@@ -1,0 +1,103 @@
+.container {
+    max-width: 250px;
+    max-height: 130px;
+    width: auto;
+    height: auto;
+}
+
+.value {
+    font-weight: bold;
+}
+
+.ui-dataview-list .ui-dataview-row {
+    border-bottom: 1px solid #A8A8A8;
+    padding: 25px 10px;
+    border-bottom-color: var(--input-border-color, #A8A8A8);
+}
+
+.logo {
+    width: 5%;
+}
+
+.detail {
+    width: 85%;
+    padding-left: 25px;
+}
+
+.footer {
+    background: #333333;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+
+}
+
+.content {
+    margin-bottom: 100px;
+}
+
+.ui-g div {
+    background-color: #f2f2f2;
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+}
+
+.container2 {
+    max-width: 500px;
+    max-height: 313px;
+    width: auto;
+    height: auto;
+}
+
+.container3 {
+    max-width: 300px;
+    max-height: 180px;
+    width: auto;
+    height: auto;
+}
+
+.container4 {
+    max-width: 500px;
+    max-height: 313px;
+    width: auto;
+    height: auto;
+    margin: auto;
+
+}
+
+.label {
+    width: 20%;
+    padding: 4px;
+}
+
+.issearched {
+    background: #fe9887;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    height: 10%;
+}
+
+.value2 {
+    width: 80%;
+    padding: 4px;
+}
+
+.grid {
+    width: 100%;
+}
+
+.error {
+    color: red;
+}
+
+.outputLabel {
+    font-weight: bold;
+}
+
+.grid {
+    width: 33%;
+    padding: 4px;
+}

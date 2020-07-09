@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" template="layout.xhtml">
+    <f:metadata>
+        <f:viewAction action="#{uploadImagensBean.init}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:inputHidden value="#{flash.keep}"/><br/>
+        <h:inputHidden value="#{flash.veiculo}"/><br/>
+        <h:outputStylesheet library="default" name="css/style.css"/>
+
+        <h:form enctype="multipart/form-data">
+            <div class="ui-g">
+                <div class="ui-g-12" style="background: #007ad9">
+                    <h:outputText value="Está quase pronto"
+                                  style="font-weight: bold; font-size: xx-large; color: white"/><br/>
+                    <h:outputText value="Agora você deve selecionar uma ou mais imagens para o veículo."
+                                  style="font-size: medium; color: white"/>
+                </div>
+                <div class="ui-g-6">
+                    <h:outputText value="#{uploadImagensBean.veiculo.marca}"
+                                  style="font-weight: bold; font-size: xx-large"/>
+                    <p:spacer width="10" height="10"/>
+                    <h:outputText value="#{uploadImagensBean.veiculo.modelo}"
+                                  style="font-weight: bold; font-size: xx-large"/>
+                    <p:separator/>
+                    <h:outputText value="R$ #{uploadImagensBean.veiculo.preco}"
+                                  style="font-weight: bold; font-size: xx-large"/>
+                    <p:separator/>
+                    <h:outputText value="Ano #{uploadImagensBean.veiculo.ano} "
+                                  style="font-weight:bold;font-size: large"/>
+                    <br/><br/>
+                    <h:outputText value="Tansmissão: #{uploadImagensBean.veiculo.transmissao}"
+                                  style="font-weight: bold;font-size: large"/>
+                    <br/><br/>
+                    <h:outputText value="Combustivel: #{uploadImagensBean.veiculo.combustivel}"
+                                  style="font-weight: bold;font-size: large"/>
+                    <br/><br/>
+                    <div class="ui-g-6" style="background: #ffffff">
+                        <h:outputText value="Descrição" style="font-weight: bold;font-size: large"/><br/>
+                        <h:outputText value="#{uploadImagensBean.veiculo.descricao}" style="font-size: medium"/>
+                    </div>
+                </div>
+                <div class="ui-g-6" style="background: #ffffff">
+                    <p:galleria id="galeria" value="#{uploadImagensBean.filesDiretorio}" panelHeight="313"
+                                panelWidth="500"
+                                var="image" style="background: #ffffff" rendered="true">
+                        <p:graphicImage styleClass="container2" library="default"
+                                        name="images/#{uploadImagensBean.veiculo.pastaImagens}/#{image}"/>
+                    </p:galleria>
+                    <p:fileUpload value="#{uploadImagensBean.files}"
+                                  mode="simple"
+                                  skinSimple="true"
+                                  multiple="true"
+                                  validator="#{validators.validateFile}"
+                                  label="Selecionar"/>
+
+                    <br/>
+                    <p:commandButton value="Fazer Upload" actionListener="#{uploadImagensBean.upload}" ajax="false"
+                                     update="galeria"/>
+                </div>
+            </div>
+            <p:commandButton value="Concluir" action="#{uploadImagensBean.salvar}" iconPos="right" icon="pi pi-check"
+                             disabled="#{uploadImagensBean.disableButton()}"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

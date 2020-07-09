@@ -1,0 +1,352 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" template="WEB-INF/template/layout.xhtml">
+
+    <ui:define name="content">
+
+        <h:outputStylesheet library="default" name="css/style.css"/>
+        <h:form id="form">
+            <p:carousel value="#{indexBean.veiculosAnuncio()}"
+                        var="veiculo"
+                        headerText="Alguns de nossos veículos"
+                        itemStyle="text-align: center"
+                        responsive="true" style="margin: 30px" >
+                <p:panelGrid columns="1"
+                             style="width: 100%;margin: 10px 0px" columnClasses="label, value" layout="grid"
+                             styleClass="ui-panelgrid-blank">
+                    <f:facet name="header">
+                        <p:graphicImage library="default"
+                                        name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                        styleClass="container"/>
+                    </f:facet>
+                    <h:outputText value="Descrição: " style="font-weight: bold"/>
+                    <h:outputText value="#{veiculo.descricao}"/>
+                </p:panelGrid>
+                <f:facet name="footer">
+                    Confira abaixo nosso veiculos em estoque
+                </f:facet>
+            </p:carousel>
+            <p:separator/>
+            <p:tabView orientation="left">
+                <p:tab title="Todos os veiculos">
+                    <p:dataGrid var="veiculo" value="#{indexBean.veiculoList}"
+                                columns="3"
+                                layout="grid"
+                                rows="6"
+                                paginator="true"
+                                id="veiculos"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,18">
+                        <f:facet name="header">
+                            Veículos em estoque
+                        </f:facet>
+
+                        <p:panel header="#{veiculo.modelo}" style="text-align: justify-all">
+                            <h:panelGrid columns="1" style="width:100%; max-height: 300px">
+                                <p:graphicImage library="default"
+                                                name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                                styleClass="container"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:outputText value="Marca" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.marca}"/>
+                                <h:outputText value="Modelo" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.modelo}"/>
+                                <h:outputText value="Ano" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.ano}"/>
+                                <h:outputText value="Combustível" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.combustivel}"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:panelGrid columns="1" bodyrows="1">
+                                    <p:commandButton value="Detalhes..." action="#{indexBean.detalhes()}"
+                                                     icon="pi pi-list"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculo}"
+                                                                     target="#{indexBean.veiculoSelecionado}"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+                <p:tab title="Carros e Ultilitários">
+                    <p:dataGrid var="veiculo" value="#{indexBean.carrosUltilitarios()}"
+                                columns="3"
+                                layout="grid"
+                                rows="6"
+                                paginator="true"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,18">
+                        <f:facet name="header">
+                            Carros e Ultilitários
+                        </f:facet>
+
+                        <p:panel header="#{veiculo.modelo}" style="text-align: justify-all">
+                            <h:panelGrid columns="1" style="width:100%; max-height: 300px">
+                                <p:graphicImage library="default"
+                                                name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                                styleClass="container"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:outputText value="Marca" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.marca}"/>
+                                <h:outputText value="Modelo" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.modelo}"/>
+                                <h:outputText value="Ano" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.ano}"/>
+                                <h:outputText value="Combustível" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.combustivel}"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:panelGrid columns="1" bodyrows="1">
+                                    <p:commandButton value="Detalhes..." action="#{indexBean.detalhes()}"
+                                                     icon="pi pi-list"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculo}"
+                                                                     target="#{indexBean.veiculoSelecionado}"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+                <p:tab title="Motos e Quadricíclos">
+                    <p:dataGrid var="veiculo" value="#{indexBean.motosQuadriciclos()}"
+                                columns="3"
+                                layout="grid"
+                                rows="6"
+                                paginator="true"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,18">
+                        <f:facet name="header">
+                            Motos e Quadricíclos
+                        </f:facet>
+
+                        <p:panel header="#{veiculo.modelo}" style="text-align: justify-all">
+                            <h:panelGrid columns="1" style="width:100%; max-height: 300px">
+                                <p:graphicImage library="default"
+                                                name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                                styleClass="container"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:outputText value="Marca" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.marca}"/>
+                                <h:outputText value="Modelo" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.modelo}"/>
+                                <h:outputText value="Ano" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.ano}"/>
+                                <h:outputText value="Combustível" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.combustivel}"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:panelGrid columns="1" bodyrows="1">
+                                    <p:commandButton value="Detalhes..." action="#{indexBean.detalhes()}"
+                                                     icon="pi pi-list"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculo}"
+                                                                     target="#{indexBean.veiculoSelecionado}"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+                <p:tab title="Carretas e Carrocerias">
+                    <p:dataGrid var="veiculo" value="#{indexBean.carretasCarrocerias()}"
+                                columns="3"
+                                layout="grid"
+                                rows="6"
+                                paginator="true"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,18">
+                        <f:facet name="header">
+                            Carretas e Carrocerias
+                        </f:facet>
+
+                        <p:panel header="#{veiculo.modelo}" style="text-align: justify-all">
+                            <h:panelGrid columns="1" style="width:100%; max-height: 300px">
+                                <p:graphicImage library="default"
+                                                name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                                styleClass="container"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:outputText value="Marca" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.marca}"/>
+                                <h:outputText value="Modelo" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.modelo}"/>
+                                <h:outputText value="Ano" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.ano}"/>
+                                <h:outputText value="Combustível" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.combustivel}"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:panelGrid columns="1" bodyrows="1">
+                                    <p:commandButton value="Detalhes..." action="#{indexBean.detalhes()}"
+                                                     icon="pi pi-list"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculo}"
+                                                                     target="#{indexBean.veiculoSelecionado}"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+                <p:tab title="Caminhões">
+                    <p:dataGrid var="veiculo" value="#{indexBean.caminhoes()}"
+                                columns="3"
+                                layout="grid"
+                                rows="6"
+                                paginator="true"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,18">
+                        <f:facet name="header">
+                            Caminhões
+                        </f:facet>
+
+                        <p:panel header="#{veiculo.modelo}" style="text-align: justify-all">
+                            <h:panelGrid columns="1" style="width:100%; max-height: 300px">
+                                <p:graphicImage library="default"
+                                                name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                                styleClass="container"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:outputText value="Marca" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.marca}"/>
+                                <h:outputText value="Modelo" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.modelo}"/>
+                                <h:outputText value="Ano" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.ano}"/>
+                                <h:outputText value="Combustível" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.combustivel}"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:panelGrid columns="1" bodyrows="1">
+                                    <p:commandButton value="Detalhes..." action="#{indexBean.detalhes()}"
+                                                     icon="pi pi-list"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculo}"
+                                                                     target="#{indexBean.veiculoSelecionado}"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+                <p:tab title="Ônibus e Vans">
+                    <p:dataGrid var="veiculo" value="#{indexBean.onibusVans()}"
+                                columns="3"
+                                layout="grid"
+                                rows="6"
+                                paginator="true"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,18">
+                        <f:facet name="header">
+                            Ônibus e Vans
+                        </f:facet>
+
+                        <p:panel header="#{veiculo.modelo}" style="text-align: justify-all">
+                            <h:panelGrid columns="1" style="width:100%; max-height: 300px">
+                                <p:graphicImage library="default"
+                                                name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                                styleClass="container"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:outputText value="Marca" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.marca}"/>
+                                <h:outputText value="Modelo" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.modelo}"/>
+                                <h:outputText value="Ano" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.ano}"/>
+                                <h:outputText value="Combustível" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.combustivel}"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:panelGrid columns="1" bodyrows="1">
+                                    <p:commandButton value="Detalhes..." action="#{indexBean.detalhes()}"
+                                                     icon="pi pi-list"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculo}"
+                                                                     target="#{indexBean.veiculoSelecionado}"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+                <p:tab title="Náuticos">
+                    <p:dataGrid var="veiculo" value="#{indexBean.nauticos()}"
+                                columns="3"
+                                layout="grid"
+                                rows="6"
+                                paginator="true"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,18">
+                        <f:facet name="header">
+                            Náuticos
+                        </f:facet>
+
+                        <p:panel header="#{veiculo.modelo}" style="text-align: justify-all">
+                            <h:panelGrid columns="1" style="width:100%; max-height: 300px">
+                                <p:graphicImage library="default"
+                                                name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                                styleClass="container"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:outputText value="Marca" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.marca}"/>
+                                <h:outputText value="Modelo" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.modelo}"/>
+                                <h:outputText value="Ano" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.ano}"/>
+                                <h:outputText value="Combustível" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.combustivel}"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:panelGrid columns="1" bodyrows="1">
+                                    <p:commandButton value="Detalhes..." action="#{indexBean.detalhes()}"
+                                                     icon="pi pi-list"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculo}"
+                                                                     target="#{indexBean.veiculoSelecionado}"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+                <p:tab title="Outros">
+                    <p:dataGrid var="veiculo" value="#{indexBean.outros()}"
+                                columns="3"
+                                layout="grid"
+                                rows="6"
+                                paginator="true"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,18">
+                        <f:facet name="header">
+                            Outros
+                        </f:facet>
+
+                        <p:panel header="#{veiculo.modelo}" style="text-align: justify-all">
+                            <h:panelGrid columns="1" style="width:100%; max-height: 300px">
+                                <p:graphicImage library="default"
+                                                name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                                styleClass="container"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:outputText value="Marca" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.marca}"/>
+                                <h:outputText value="Modelo" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.modelo}"/>
+                                <h:outputText value="Ano" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.ano}"/>
+                                <h:outputText value="Combustível" style="font-weight: bold"/>
+                                <h:outputText value="#{veiculo.combustivel}"/>
+                                <p:separator style="width: 80%; float: left"/>
+                                <h:panelGrid columns="1" bodyrows="1">
+                                    <p:commandButton value="Detalhes..." action="#{indexBean.detalhes()}"
+                                                     icon="pi pi-list"
+                                                     iconPos="right">
+                                        <f:setPropertyActionListener value="#{veiculo}"
+                                                                     target="#{indexBean.veiculoSelecionado}"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+
+            </p:tabView>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+

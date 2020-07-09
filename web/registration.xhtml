@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="WEB-INF/template/layout.xhtml">
+
+    <ui:define name="content">
+        <h:inputHidden value="#{flash.keep}"/><br/>
+        <h:inputHidden value="#{flash.comprador}"/><br/>
+        <h:outputStylesheet library="default" name="css/style.css"/>
+        <h:form>
+            <p:messages autoUpdate="true" id="messages"/>
+            <p:wizard flowListener="#{registrationBean.onFlowProcess}">
+                <p:tab id="registro" title="Registro">
+                    <p:panel header="Dados para contato">
+                        <h:panelGrid columns="2" columnClasses="label, value2">
+                            <h:outputText value="Nome: "/>
+                            <p:inputText value="#{registrationBean.comprador.nome}"
+                                         required="true"
+                                         requiredMessage="O campo nome é obrigatório"
+                                         label="Nome"/>
+
+                            <h:outputText value="DDD+Telefone: "/>
+                            <p:inputText value="#{registrationBean.comprador.telefone}"
+                                         required="true"
+                                         requiredMessage="O campo telefone é obrigatório"
+                                         label="Telefone">
+                                <p:keyFilter regEx="/[\d\-\.]/"/>
+                            </p:inputText>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+
+                <p:tab id="confirm" title="Confirmação">
+                    <p:panel header="Os dados abaixo estão corretos?">
+                        <h:panelGrid id="confirmation" columns="2" columnClasses="grid, grid">
+                            <h:outputText value="Nome: "/>
+                            <h:outputText value="#{registrationBean.comprador.nome}" styleClass="outputLabel"/>
+
+                            <h:outputText value="Telefone: "/>
+                            <h:outputText value="#{registrationBean.comprador.telefone}" styleClass="outputLabel"/>
+
+                            <h:outputText value="Veiculo: "/>
+                            <h:outputText value="#{registrationBean.comprador.veiculo.modelo}"
+                                          styleClass="outputLabel"/>
+                        </h:panelGrid>
+
+                    </p:panel>
+                </p:tab>
+                <p:tab id="finish" title="Finalizar">
+                    <p:panel header="Finalizar">
+                        <p:panelGrid columns="1">
+                            <h:outputText
+                                    value="Muito bem #{registrationBean.comprador.nome}, agora é só confirmar no botão abaixo que um de nossos vendedores entrará em contato com você em breve"
+                                    style="font-weight: bold"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Confirmar" action="#{registrationBean.save}" process="@this"/><br/>
+                        <h:outputText
+                                value="Ao clicar em confirmar você será redirecionado para página inicial em 5 segundos"/>
+                    </p:panel>
+                </p:tab>
+            </p:wizard>
+        </h:form>
+    </ui:define>
+</ui:composition>

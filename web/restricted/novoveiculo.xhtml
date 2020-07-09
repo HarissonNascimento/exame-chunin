@@ -1,0 +1,164 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" template="layout.xhtml">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{novoVeiculoBean.init}"/>
+        </f:metadata>
+    </h:head>
+    <ui:define name="content">
+        <h:outputStylesheet library="default" name="css/style.css"/>
+        <p:importEnum type="br.com.examechunin.model.enums.TipoVeiculo"
+                      var="TipoVeiculo" allSuffix="ALL_ENUM_VALUES"/>
+        <p:importEnum type="br.com.examechunin.model.enums.Combustivel"
+                      var="Combustivel" allSuffix="ALL_ENUM_VALUES"/>
+        <p:importEnum type="br.com.examechunin.model.enums.Transmissao"
+                      var="Cambio" allSuffix="ALL_ENUM_VALUES"/>
+
+        <h:form>
+            <div class="ui-g">
+                <div class="ui-g-8 ui-g-nopad">
+                    <div class="ui-g-6">
+                        <h:outputText value="Marca" style="font-weight: bold"/>
+                        <br/>
+                        <p:inputText value="#{novoVeiculoBean.veiculo.marca}" required="true"
+                                     requiredMessage="O campo 'Marca' não pode estar vazio">
+                            <f:ajax event="blur" render="marca"/>
+                        </p:inputText>
+                        <br/>
+                        <h:outputText value="Modelo" style="font-weight: bold"/>
+                        <br/>
+                        <p:inputText value="#{novoVeiculoBean.veiculo.modelo}" required="true"
+                                     requiredMessage="O campo 'Modelo' não pode estar vazio">
+                            <f:ajax event="blur" render="modelo"/>
+                        </p:inputText>
+                    </div>
+                    <div class="ui-g-6">
+                        <h:outputText value="Ano" style="font-weight: bold"/>
+                        <br/>
+                        <p:inputText value="#{novoVeiculoBean.veiculo.ano}" required="true"
+                                     requiredMessage="O campo 'Ano' não pode estar vazio">
+                            <p:keyFilter regEx="/[\d\-]/"/>
+                            <f:ajax event="blur" render="ano"/>
+                        </p:inputText>
+                        <br/>
+                        <h:outputText value="Preço R$" style="font-weight: bold"/>
+                        <br/>
+                        <p:inputText value="#{novoVeiculoBean.veiculo.preco}" required="true"
+                                     requiredMessage="O campo 'Preço' não pode estar vazio">
+                            <p:keyFilter regEx="/[\d\-\.]/"/>
+                            <f:ajax event="blur" render="preco"/>
+                        </p:inputText>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:selectOneMenu value="#{novoVeiculoBean.veiculo.tipoVeiculoEnum}" required="true"
+                                         requiredMessage="Selecione um tipo para o veículo"
+                                         style="width: 300px">
+                            <f:selectItem value="#{null}" itemLabel="Selecione o tipo do veículo"/>
+                            <f:selectItems value="#{TipoVeiculo.ALL_ENUM_VALUES}" var="tipoVeiculo"
+                                           itemValue="#{tipoVeiculo}"
+                                           itemLabel="#{tipoVeiculo}"/>
+                            <f:ajax event="change" listener="#{novoVeiculoBean.veiculo.setarAtributos}"
+                                    render="veiculo"/>
+                        </p:selectOneMenu>
+                        <br/>
+                        <br/>
+                        <p:selectOneMenu value="#{novoVeiculoBean.veiculo.combustivelEnum}" required="true"
+                                         requiredMessage="Selecione um tipo de combustível"
+                                         style="width: 300px">
+                            <f:selectItem value="#{null}" itemLabel="Selecione o combustível do veículo"/>
+                            <f:selectItems value="#{Combustivel.ALL_ENUM_VALUES}" var="tipoCombustivel"
+                                           itemValue="#{tipoCombustivel}"
+                                           itemLabel="#{tipoCombustivel}"/>
+                            <f:ajax event="change" listener="#{novoVeiculoBean.veiculo.setarAtributos}"
+                                    render="combustivel"/>
+                        </p:selectOneMenu>
+                        <br/>
+                        <br/>
+                        <p:selectOneMenu value="#{novoVeiculoBean.veiculo.transmissaoEnum}" required="true"
+                                         requiredMessage="Selecione um tipo de transmissão"
+                                         style="width: 300px">
+                            <f:selectItem value="#{null}" itemLabel="Selecione a transmissão do veículo"/>
+                            <f:selectItems value="#{Cambio.ALL_ENUM_VALUES}" var="tipoCambio"
+                                           itemValue="#{tipoCambio}"
+                                           itemLabel="#{tipoCambio}"/>
+                            <f:ajax event="change" listener="#{novoVeiculoBean.veiculo.setarAtributos}"
+                                    render="transmissao"/>
+                        </p:selectOneMenu>
+                        <br/>
+                        <br/>
+                    </div>
+
+                </div>
+                <div class="ui-g-4">
+                    <h:outputText value="Se quiser, crie uma descrição com até 200 caractéres:"/>
+                    <p:inputTextarea value="#{novoVeiculoBean.veiculo.descricao}" rows="8" cols="50" counter="descricao"
+                                     maxlength="200"
+                                     counterTemplate="{0} caractéres restantes." autoResize="false">
+                        <f:ajax event="blur" render="descr"/>
+                    </p:inputTextarea>
+                    <br/>
+                    <h:outputText id="descricao"/>
+                </div>
+            </div>
+            <p:separator/>
+            <h:outputText value="Verifique se os dados abaixo estão corretos"
+                          style="font-weight: bold; font-size: larger"/>
+            <p:separator/>
+            <div class="ui-g">
+                <div class="ui-g-8 ui-g-nopad">
+                    <div class="ui-g-6">
+                        <h:outputText value="Marca"/>
+                        <br/>
+                        <h:outputText value="#{novoVeiculoBean.veiculo.marca}" id="marca" style="font-weight: bold"/>
+                        <br/>
+                        <h:outputText value="Modelo"/>
+                        <br/>
+                        <h:outputText value="#{novoVeiculoBean.veiculo.modelo}" id="modelo" style="font-weight: bold"/>
+                    </div>
+                    <div class="ui-g-6">
+                        <h:outputText value="Ano"/>
+                        <br/>
+                        <h:outputText value="#{novoVeiculoBean.veiculo.ano}" id="ano" style="font-weight: bold"/>
+                        <br/>
+                        <h:outputText value="Preço"/>
+                        <br/>
+                        <h:outputText value="#{novoVeiculoBean.veiculo.preco}" id="preco" style="font-weight: bold"/>
+                    </div>
+                    <div class="ui-g-12">
+                        <h:outputText value="Tipo do veículo"/>
+                        <br/>
+                        <h:outputText value="#{novoVeiculoBean.veiculo.tipoVeiculo}" id="veiculo"
+                                      style="font-weight: bold"/>
+                        <br/>
+                        <h:outputText value="Tipo de combustivel"/>
+                        <br/>
+                        <h:outputText value="#{novoVeiculoBean.veiculo.combustivel}" id="combustivel"
+                                      style="font-weight: bold"/>
+                        <br/>
+                        <h:outputText value="Tipo de transmissão"/>
+                        <br/>
+                        <h:outputText value="#{novoVeiculoBean.veiculo.transmissao}" id="transmissao"
+                                      style="font-weight: bold"/>
+                    </div>
+                </div>
+                <div class="ui-g-4">
+                    <h:outputText value="Descrição" style="font-weight: bold"/><br/>
+                    <h:outputText value="#{novoVeiculoBean.veiculo.descricao}" id="descr"/>
+                </div>
+            </div>
+            <p:growl id="message" showDetail="true"/>
+            <p:commandButton value="Próximo" action="#{novoVeiculoBean.next}" iconPos="right"
+                             icon="pi pi-angle-double-right" update="message">
+                <p:confirm header="Confirmar" message="Os dados estão corretos?" icon="pi pi-exclamation-triangle"/>
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

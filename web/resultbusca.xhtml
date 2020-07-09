@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" template="WEB-INF/template/layout.xhtml">
+
+    <ui:define name="content">
+        <h:outputStylesheet library="default" name="css/style.css"/>
+        <h:form id="form">
+            <h:panelGrid columns="1" rendered="#{resultBean.searched}" styleClass="issearched">
+                <h:outputText
+                        value="Nenhum resultado foi encontrado para sua busca: '#{resultBean.busca}'. Listamos abaixo diversas ofertas especiais para você "
+                        style="font-weight: bold"/>
+            </h:panelGrid>
+            <p:dataGrid var="veiculo" value="#{resultBean.listVeiculos}"
+                        columns="3"
+                        layout="grid"
+                        rows="6"
+                        paginator="true"
+                        id="veiculos"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,18">
+                <f:facet name="header">
+                    Veículos em estoque
+                </f:facet>
+
+                <p:panel header="#{veiculo.modelo}" style="text-align: justify-all">
+                    <h:panelGrid columns="1" style="width:100%;min-height: 500px">
+                        <p:graphicImage library="default" name="images/#{veiculo.pastaImagens}/#{veiculo.thumbnail()}"
+                                        styleClass="container3"/>
+                        <p:separator/>
+                        <h:outputText value="Marca" style="font-weight: bold"/>
+                        <h:outputText value="#{veiculo.marca}"/>
+                        <h:outputText value="Modelo" style="font-weight: bold"/>
+                        <h:outputText value="#{veiculo.modelo}"/>
+                        <h:outputText value="Ano" style="font-weight: bold"/>
+                        <h:outputText value="#{veiculo.ano}"/>
+                        <h:outputText value="Combustível" style="font-weight: bold"/>
+                        <h:outputText value="#{veiculo.combustivel}"/>
+                        <p:separator/>
+                        <h:panelGrid columns="3" bodyrows="1">
+                            <p:commandButton value="Mais Detalhes" action="#{resultBean.detalhes()}"
+                                             icon="pi pi-list"
+                                             iconPos="right">
+                                <f:setPropertyActionListener value="#{veiculo}"
+                                                             target="#{resultBean.veiculoSelecionado}"/>
+                            </p:commandButton>
+
+                            <p:commandButton value="Deletar" action="#{resultBean.deletar()}"
+                                             icon="pi pi-times"
+                                             iconPos="right"
+                                             rendered="#{loginBean.logged}">
+                                <f:setPropertyActionListener value="#{veiculo}"
+                                                             target="#{resultBean.veiculoSelecionado}"/>
+                                <p:confirm header="Deletar" message="Tem certeza que deseja deletar #{veiculo.modelo} ?"
+                                           icon="pi pi-exclamation-triangle"/>
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
+                                                 icon="pi pi-check"/>
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no"
+                                                 icon="pi pi-times"/>
+                            </p:confirmDialog>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:panel>
+            </p:dataGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>

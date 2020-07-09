@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="WEB-INF/template/layout.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <h:panelGrid columns="1">
+                <h:outputText value="Usuário:"/>
+                <p:inputText value="#{loginBean.nome}" required="true"
+                             requiredMessage="O campo Usuário não pode estar vazio"/>
+                <h:outputText value="Senha:"/>
+                <p:password value="#{loginBean.password}" required="true"
+                            requiredMessage="O campo Senha não pode estar vazio"/>
+                <p:commandButton value="Entrar" action="#{loginBean.logar()}" ajax="false"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
