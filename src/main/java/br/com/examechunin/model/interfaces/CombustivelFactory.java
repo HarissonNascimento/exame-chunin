@@ -14,6 +14,10 @@ public class CombustivelFactory {
             return new Eletrico();
         } else if (combustivel.equals(Combustivel.FLEX)) {
             return new Flex();
+        } else if (combustivel.equals(Combustivel.HIBRIDO)){
+            return new Hibrido();
+        } else if (combustivel.equals(Combustivel.OUTROS)){
+            return new OutrosCombustivel();
         }
         throw new RuntimeException("Tipo de combustivel não encontrado");
     }
